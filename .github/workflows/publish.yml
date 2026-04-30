@@ -83,3 +83,46 @@ jobs:
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           command: pages deploy public --project-name=mlbot-blog --branch=live --commit-dirty=true
           gitHubToken: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Attach custom domain
+        env:
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_PAGES_PROJECT: mlbot-blog
+          CUSTOM_DOMAIN: mlbot.blog
+        run: |
+          node <<'NODE'
+          const accountId = process.env.CLOUDFLARE_ACCOUNT_ID;
+          const token = process.env.CLOUDFLARE_API_TOKEN;
+          const project = process.env.CLOUDFLARE_PAGES_PROJECT;
+          const domain = process.env.CUSTOM_DOMAIN;
+          const base = `https://api.cloudflare.com/client/v4/accounts/${accountId}/pages/projects/${project}/domains`;
+          const headers = {
+            authorization: `Bearer ${token}`,
+            "content-type": "application/json"
+          };
+
+          async function request(path, options = {}) {
+            const response = await fetch(`${base}${path}`, { headers, ...options });
+            const payload = await response.json().catch(() => ({}));
+            return { response, payload };
+          }
+
+          const current = await request(`/${encodeURIComponent(domain)}`);
+          if (current.response.ok && current.payload.success) {
+            console.log(`${domain} is already attached to ${project}.`);
+            process.exit(0);
+          }
+
+          const created = await request("", {
+            method: "POST",
+            body: JSON.stringify({ name: domain })
+          });
+
+          if (!created.response.ok || !created.payload.success) {
+            console.error(JSON.stringify(created.payload, null, 2));
+            process.exit(1);
+          }
+
+          console.log(`Attached ${domain} to ${project}.`);
+          NODE
