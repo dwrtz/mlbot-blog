@@ -98,9 +98,9 @@ The remaining research target is not just "make the posterior bigger." It is to 
 
 Source artifacts:
 
-- [quadrature ADF suite](artifacts/quadrature_adf_suite.md)
-- [alias entropy shrink suite](artifacts/alias_entropy_shrink_suite.md)
-- [quadrature Pareto suite](artifacts/quadrature_pareto_suite.md)
+- [quadrature ADF suite artifact](https://github.com/dwrtz/mlbot-blog/blob/main/content/posts/2026-04-30-quadrature-power-ep-filtering/artifacts/quadrature_adf_suite.md)
+- [alias entropy shrink suite artifact](https://github.com/dwrtz/mlbot-blog/blob/main/content/posts/2026-04-30-quadrature-power-ep-filtering/artifacts/alias_entropy_shrink_suite.md)
+- [quadrature Pareto suite artifact](https://github.com/dwrtz/mlbot-blog/blob/main/content/posts/2026-04-30-quadrature-power-ep-filtering/artifacts/quadrature_pareto_suite.md)
 - [`59f084f`: quadrature ADF nonlinear baselines](https://github.com/dwrtz/ml-examples/commit/59f084f)
 - [`78d5ba7`: alias-indexed quadrature filter experiment](https://github.com/dwrtz/ml-examples/commit/78d5ba7)
 - [`7d88e2e`: prior-weighted alias quadrature experiment](https://github.com/dwrtz/ml-examples/commit/7d88e2e)

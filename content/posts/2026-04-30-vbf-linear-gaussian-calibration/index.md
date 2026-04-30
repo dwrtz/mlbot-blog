@@ -89,5 +89,9 @@ That labeling became the backbone of the nonlinear series. The scalar benchmark 
 
 Source artifacts:
 
-- [linear Gaussian final report](artifacts/linear_gaussian_final_report.md)
-- [linear Gaussian ELBO ablation](artifacts/linear_gaussian_elbo_ablation.md)
+- [linear Gaussian final report artifact](https://github.com/dwrtz/mlbot-blog/blob/main/content/posts/2026-04-30-vbf-linear-gaussian-calibration/artifacts/linear_gaussian_final_report.md)
+- [linear Gaussian ELBO ablation artifact](https://github.com/dwrtz/mlbot-blog/blob/main/content/posts/2026-04-30-vbf-linear-gaussian-calibration/artifacts/linear_gaussian_elbo_ablation.md)
+- [`83de300`: final report aggregator](https://github.com/dwrtz/ml-examples/commit/83de300)
+- [`2f5cca4`: ELBO ablation sweep](https://github.com/dwrtz/ml-examples/commit/2f5cca4)
+- [`e76f6fd`: ELBO calibration sweep](https://github.com/dwrtz/ml-examples/commit/e76f6fd)
+- [`d357b11`: randomized Q/R calibration sweep](https://github.com/dwrtz/ml-examples/commit/d357b11)

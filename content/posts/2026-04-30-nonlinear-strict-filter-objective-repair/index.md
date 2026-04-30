@@ -109,7 +109,7 @@ That became the next branch: IWAE/FIVO-style multi-sample objectives, alpha/powe
 
 Source artifacts:
 
-- [nonlinear unsupervised objective final report](artifacts/nonlinear_unsupervised_objective_final_report.md)
+- [nonlinear unsupervised objective final report artifact](https://github.com/dwrtz/mlbot-blog/blob/main/content/posts/2026-04-30-nonlinear-strict-filter-objective-repair/artifacts/nonlinear_unsupervised_objective_final_report.md)
 - [`fa4e94a`: final report aggregation in `ml-examples`](https://github.com/dwrtz/ml-examples/commit/fa4e94a989efc446ecaaed8cc4034a9a9b0ae2f2)
 - [`8d6a9e`: windowed joint ELBO implementation](https://github.com/dwrtz/ml-examples/commit/8d6a9e3cf04be3863c5e22d04e3e63e5cebbf3ad)
 - [`db13d4e`: predictive-y auxiliary objective](https://github.com/dwrtz/ml-examples/commit/db13d4e1e0a2354f50454b6db337fc859eafaf6a)
