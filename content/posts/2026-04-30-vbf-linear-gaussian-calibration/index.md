@@ -1,7 +1,7 @@
 ---
 title: "Variational Filtering, Rebuilt From the Linear Case"
 description: "A scalar linear-Gaussian benchmark made the VBF edge-factor implementation auditable before moving to nonlinear filtering."
-date: 2026-04-30T13:30:00+05:30
+date: 2026-04-30T13:15:00+05:30
 draft: false
 slug: "vbf-linear-gaussian-calibration"
 tags:
@@ -91,4 +91,3 @@ Source artifacts:
 
 - [linear Gaussian final report](artifacts/linear_gaussian_final_report.md)
 - [linear Gaussian ELBO ablation](artifacts/linear_gaussian_elbo_ablation.md)
-

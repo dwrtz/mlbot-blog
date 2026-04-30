@@ -1,7 +1,7 @@
 ---
 title: "Reference-Free Quadrature Filters For The Sine Benchmark"
 description: "Deterministic quadrature ADF and Power-EP baselines showed that much of the nonlinear filtering gap was algorithmic, not just amortization."
-date: 2026-04-30T14:00:00+05:30
+date: 2026-04-30T13:18:00+05:30
 draft: false
 slug: "quadrature-power-ep-filtering"
 tags:
@@ -99,4 +99,3 @@ Source artifacts:
 - [quadrature ADF suite](artifacts/quadrature_adf_suite.md)
 - [alias entropy shrink suite](artifacts/alias_entropy_shrink_suite.md)
 - [quadrature Pareto suite](artifacts/quadrature_pareto_suite.md)
-

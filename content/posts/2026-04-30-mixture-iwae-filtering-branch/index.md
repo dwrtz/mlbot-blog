@@ -1,7 +1,7 @@
 ---
 title: "When Mixtures Beat Local ELBO In Nonlinear Filtering"
 description: "Small strict mixture filters with IWAE and FIVO-style objectives closed much of the nonlinear calibration gap while staying reference-free."
-date: 2026-04-30T13:50:00+05:30
+date: 2026-04-30T13:17:00+05:30
 draft: false
 slug: "mixture-iwae-filtering-branch"
 tags:
@@ -95,4 +95,3 @@ Source artifacts:
 
 - [direct mixture IWAE follow-up](artifacts/direct_mixture_iwae_followup.md)
 - [K4 Pareto report](artifacts/k4_pareto_report.md)
-

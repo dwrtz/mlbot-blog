@@ -1,7 +1,7 @@
 ---
 title: "Repairing a Nonlinear Strict Filter Without Reference Targets"
 description: "The nonlinear sine-observation benchmark exposed ELBO under-dispersion, then a joint ELBO, predictive-y, and masked-y objective partially repaired it."
-date: 2026-04-30T13:40:00+05:30
+date: 2026-04-30T13:16:00+05:30
 draft: false
 slug: "nonlinear-strict-filter-objective-repair"
 tags:
@@ -109,4 +109,3 @@ That became the next branch: IWAE/FIVO-style multi-sample objectives, alpha/powe
 Source artifact:
 
 - [nonlinear unsupervised objective final report](artifacts/nonlinear_unsupervised_objective_final_report.md)
-
