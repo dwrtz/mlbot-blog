@@ -1,55 +1,75 @@
 {{ define "main" }}
-<article class="content-shell prose article" data-pagefind-body>
-  <header class="article-header">
-    <h1>{{ .Title }}</h1>
-    {{ with .Description }}<p class="dek">{{ . }}</p>{{ end }}
-    <div class="article-meta">
-      {{ with .Date }}<time datetime="{{ .Format "2006-01-02T15:04:05Z07:00" }}">{{ .Format "January 2, 2006" }}</time>{{ end }}
-      {{ if and .Lastmod (ne (.Lastmod.Format "2006-01-02") (.Date.Format "2006-01-02")) }}
-        <span>Updated {{ .Lastmod.Format "January 2, 2006" }}</span>
-      {{ end }}
-      <span>{{ .Params.author | default site.Params.defaultAuthor }}</span>
-    </div>
-    {{ with .Params.tags }}
-      <div class="tag-list">
-        {{ range . }}<a href="{{ printf "/tags/%s/" . | relURL }}">{{ . }}</a>{{ end }}
-      </div>
-    {{ end }}
-    {{ with .Params.series }}
-      {{ if gt (len .) 0 }}
-        <p class="series-line">Series: {{ delimit . ", " }}</p>
-      {{ end }}
-    {{ end }}
-  </header>
-
-  {{ with index .Params.images 0 }}
-    {{ with $.Resources.GetMatch . }}
-      {{ $cover480 := .Resize "480x webp q82" }}
-      {{ $cover760 := .Resize "760x webp q82" }}
-      <figure class="cover-figure">
-        <picture>
-          <source
-            type="image/webp"
-            srcset="{{ $cover480.RelPermalink }} 480w, {{ $cover760.RelPermalink }} 760w"
-            sizes="(max-width: 792px) calc(100vw - 2rem), 760px">
-          <img
-            src="{{ $cover760.RelPermalink }}"
-            width="{{ $cover760.Width }}"
-            height="{{ $cover760.Height }}"
-            alt=""
-            fetchpriority="high"
-            decoding="async">
-        </picture>
-      </figure>
-    {{ end }}
+{{ $toc := .TableOfContents }}
+{{ $hasToc := in $toc "<li>" }}
+{{ $mobileToc := replaceRE "id=\"?TableOfContents\"?" "id=\"MobileTableOfContents\"" $toc | safeHTML }}
+{{ $desktopToc := replaceRE "id=\"?TableOfContents\"?" "id=\"DesktopTableOfContents\"" $toc | safeHTML }}
+<div class="content-shell article-shell{{ if $hasToc }} article-shell-with-toc{{ end }}">
+  {{ if $hasToc }}
+    <aside class="post-toc" aria-label="Table of contents">
+      <p>Contents</p>
+      {{ $desktopToc }}
+    </aside>
   {{ end }}
 
-  {{ .Content }}
+  <article class="prose article" data-pagefind-body>
+    <header class="article-header">
+      <h1>{{ .Title }}</h1>
+      {{ with .Description }}<p class="dek">{{ . }}</p>{{ end }}
+      <div class="article-meta">
+        {{ with .Date }}<time datetime="{{ .Format "2006-01-02T15:04:05Z07:00" }}">{{ .Format "January 2, 2006" }}</time>{{ end }}
+        {{ if and .Lastmod (ne (.Lastmod.Format "2006-01-02") (.Date.Format "2006-01-02")) }}
+          <span>Updated {{ .Lastmod.Format "January 2, 2006" }}</span>
+        {{ end }}
+        <span>{{ .Params.author | default site.Params.defaultAuthor }}</span>
+      </div>
+      {{ with .Params.tags }}
+        <div class="tag-list">
+          {{ range . }}<a href="{{ printf "/tags/%s/" . | relURL }}">{{ . }}</a>{{ end }}
+        </div>
+      {{ end }}
+      {{ with .Params.series }}
+        {{ if gt (len .) 0 }}
+          <p class="series-line">Series: {{ delimit . ", " }}</p>
+        {{ end }}
+      {{ end }}
+    </header>
 
-  <footer class="article-footer">
-    {{ $sourcePath := printf "content/posts/%s/index.md" .File.ContentBaseName }}
-    <a href="{{ printf "https://github.com/dwrtz/mlbot-blog/blob/main/%s" $sourcePath }}">View source</a>
-  </footer>
-  {{ partial "related.html" . }}
-</article>
+    {{ if $hasToc }}
+      <details class="mobile-toc" data-pagefind-ignore>
+        <summary>Contents</summary>
+        {{ $mobileToc }}
+      </details>
+    {{ end }}
+
+    {{ with index .Params.images 0 }}
+      {{ with $.Resources.GetMatch . }}
+        {{ $cover480 := .Resize "480x webp q82" }}
+        {{ $cover760 := .Resize "760x webp q82" }}
+        <figure class="cover-figure">
+          <picture>
+            <source
+              type="image/webp"
+              srcset="{{ $cover480.RelPermalink }} 480w, {{ $cover760.RelPermalink }} 760w"
+              sizes="(max-width: 792px) calc(100vw - 2rem), 760px">
+            <img
+              src="{{ $cover760.RelPermalink }}"
+              width="{{ $cover760.Width }}"
+              height="{{ $cover760.Height }}"
+              alt=""
+              fetchpriority="high"
+              decoding="async">
+          </picture>
+        </figure>
+      {{ end }}
+    {{ end }}
+
+    {{ .Content }}
+
+    <footer class="article-footer">
+      {{ $sourcePath := printf "content/posts/%s/index.md" .File.ContentBaseName }}
+      <a href="{{ printf "https://github.com/dwrtz/mlbot-blog/blob/main/%s" $sourcePath }}">View source</a>
+    </footer>
+    {{ partial "related.html" . }}
+  </article>
+</div>
 {{ end }}

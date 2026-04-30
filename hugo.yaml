@@ -47,6 +47,9 @@ params:
 
 markup:
   goldmark:
+    parser:
+      autoHeadingID: true
+      autoHeadingIDType: github
     renderer:
       unsafe: false
     extensions:
@@ -64,6 +67,10 @@ markup:
     lineNos: false
     noClasses: true
     style: "github"
+  tableOfContents:
+    startLevel: 2
+    endLevel: 3
+    ordered: false
 
 related:
   includeNewer: true

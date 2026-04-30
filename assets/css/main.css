@@ -153,6 +153,18 @@ img {
   padding: 2rem 0;
 }
 
+.article-shell {
+  max-width: none;
+}
+
+.article-shell-with-toc {
+  display: grid;
+  grid-template-columns: minmax(12rem, 16rem) minmax(0, 760px);
+  gap: 3rem;
+  align-items: start;
+  width: min(1080px, calc(100% - 2rem));
+}
+
 .section-heading {
   display: flex;
   align-items: baseline;
@@ -245,9 +257,92 @@ img {
 
 .prose h2,
 .prose h3 {
+  position: relative;
+  scroll-margin-top: 1.5rem;
   line-height: 1.2;
   margin-top: 2.2rem;
   font-weight: 400;
+}
+
+.heading-anchor {
+  margin-left: 0.35rem;
+  color: var(--muted);
+  font-size: 0.82em;
+  text-decoration: none;
+  opacity: 0;
+}
+
+.prose h2:hover .heading-anchor,
+.prose h3:hover .heading-anchor,
+.prose h2:focus-within .heading-anchor,
+.prose h3:focus-within .heading-anchor,
+.heading-anchor:focus {
+  opacity: 1;
+}
+
+.post-toc {
+  position: sticky;
+  top: 1.5rem;
+  max-height: calc(100vh - 3rem);
+  overflow: auto;
+  padding-left: 1rem;
+  border-left: 1px solid var(--line);
+  color: var(--muted);
+  font-size: 0.92rem;
+  line-height: 1.35;
+}
+
+.post-toc p {
+  margin: 0 0 0.75rem;
+  color: var(--text);
+  font-size: 0.95rem;
+}
+
+.post-toc nav ul,
+.mobile-toc nav ul {
+  margin: 0;
+  padding-left: 1rem;
+  list-style: none;
+}
+
+.post-toc nav > ul,
+.mobile-toc nav > ul {
+  padding-left: 0;
+}
+
+.post-toc li,
+.mobile-toc li {
+  margin: 0.45rem 0;
+}
+
+.post-toc li li,
+.mobile-toc li li {
+  font-size: 0.95em;
+}
+
+.post-toc a,
+.mobile-toc a {
+  color: var(--accent);
+  text-decoration: none;
+}
+
+.post-toc a:hover,
+.mobile-toc a:hover {
+  color: var(--accent-strong);
+  text-decoration: underline;
+}
+
+.mobile-toc {
+  display: none;
+  margin: 0 0 1.5rem;
+  padding: 0.8rem 0;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+
+.mobile-toc summary {
+  cursor: pointer;
+  color: var(--text);
 }
 
 .prose p,
@@ -366,5 +461,20 @@ img {
 
   .home-hero {
     padding: 4rem 0 2rem;
+  }
+}
+
+@media (max-width: 1040px) {
+  .article-shell-with-toc {
+    display: block;
+    width: min(760px, calc(100% - 2rem));
+  }
+
+  .post-toc {
+    display: none;
+  }
+
+  .mobile-toc {
+    display: block;
   }
 }
