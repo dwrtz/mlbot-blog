@@ -72,10 +72,11 @@ The pieces had different jobs:
 The windowed ELBO used the carried filtering marginal and learned backward conditionals to score a latent path against the generative model. For a window ending at \(s+H\), the posterior shape was:
 
 \[
+\begin{aligned}
 q(z_{s-1:s+H})
-=
-q^F_{s+H}(z_{s+H})
+&= q^F_{s+H}(z_{s+H})
 \prod_{t=s}^{s+H} q^B_t(z_{t-1}\mid z_t)
+\end{aligned}
 \]
 
 The important constraint was that the objective used only \(x\), \(y\), the known transition, the known observation model, and the prior. No grid moments or latent states were used for the headline row.
@@ -106,6 +107,11 @@ The objective repair did enough to justify continuing, but not enough to call th
 
 That became the next branch: IWAE/FIVO-style multi-sample objectives, alpha/power-EP style updates, and small strict mixtures.
 
-Source artifact:
+Source artifacts:
 
 - [nonlinear unsupervised objective final report](artifacts/nonlinear_unsupervised_objective_final_report.md)
+- [`fa4e94a`: final report aggregation in `ml-examples`](https://github.com/dwrtz/ml-examples/commit/fa4e94a989efc446ecaaed8cc4034a9a9b0ae2f2)
+- [`8d6a9e`: windowed joint ELBO implementation](https://github.com/dwrtz/ml-examples/commit/8d6a9e3cf04be3863c5e22d04e3e63e5cebbf3ad)
+- [`db13d4e`: predictive-y auxiliary objective](https://github.com/dwrtz/ml-examples/commit/db13d4e1e0a2354f50454b6db337fc859eafaf6a)
+- [`423963e`: masked-y diagnostics](https://github.com/dwrtz/ml-examples/commit/423963e80904ed91e3e6dcdb2c04d27225042b8a)
+- [`4ec6d94`: T11 robustness report](https://github.com/dwrtz/ml-examples/commit/4ec6d94610e64587c4a839d1c623b05d9e384dd0)
