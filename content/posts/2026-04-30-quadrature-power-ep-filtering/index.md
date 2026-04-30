@@ -29,7 +29,9 @@ The last part of the week stepped away from amortized training and asked a sharp
 
 That produced the quadrature ADF and Power-EP suite. These rows used only the known transition, known observation model, and observed \(x,y\). They did not train on grid posterior moments or latent states. The update locally formed a tilted distribution and projected it back to a Gaussian or Gaussian mixture.
 
-![Quadrature state NLL comparison](plots/quadrature_state_nll.png)
+![Quadrature state NLL and predictive-y comparison](plots/quadrature_state_nll.png)
+
+The figure compares the deterministic quadrature rows from the committed sweep code against the grid-reference metrics. The left panel shows state-density quality; the right panel shows the pre-update predictive score, where the alias-heavy state update was less well calibrated.
 
 ## Baseline Quadrature ADF
 
@@ -99,3 +101,8 @@ Source artifacts:
 - [quadrature ADF suite](artifacts/quadrature_adf_suite.md)
 - [alias entropy shrink suite](artifacts/alias_entropy_shrink_suite.md)
 - [quadrature Pareto suite](artifacts/quadrature_pareto_suite.md)
+- [`59f084f`: quadrature ADF nonlinear baselines](https://github.com/dwrtz/ml-examples/commit/59f084f)
+- [`78d5ba7`: alias-indexed quadrature filter experiment](https://github.com/dwrtz/ml-examples/commit/78d5ba7)
+- [`7d88e2e`: prior-weighted alias quadrature experiment](https://github.com/dwrtz/ml-examples/commit/7d88e2e)
+- [`c1ff610`: quadrature Pareto sweep](https://github.com/dwrtz/ml-examples/commit/c1ff610)
+- [`c49c7fa`: entropy-gated alias shrink variants](https://github.com/dwrtz/ml-examples/commit/c49c7fa)
