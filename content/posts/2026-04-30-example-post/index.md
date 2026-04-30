@@ -38,7 +38,3 @@ def mean(values: list[float]) -> float:
         raise ValueError("values must not be empty")
     return sum(values) / len(values)
 ```
-
-A local image should work:
-
-![Cover image](cover.png)

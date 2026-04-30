@@ -62,7 +62,7 @@ markup:
     codeFences: true
     guessSyntax: false
     lineNos: false
-    noClasses: false
+    noClasses: true
     style: "github"
 
 related:
