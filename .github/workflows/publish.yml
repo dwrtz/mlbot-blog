@@ -187,12 +187,24 @@ jobs:
             const response = await fetch(`https://api.cloudflare.com/client/v4${url}`, { headers, ...options });
             const payload = await response.json().catch(() => ({}));
             if (!response.ok || !payload.success) {
-              throw new Error(JSON.stringify(payload, null, 2));
+              const error = new Error(JSON.stringify(payload, null, 2));
+              error.payload = payload;
+              throw error;
             }
             return payload.result;
           }
 
-          const zones = await cf(`/zones?name=${encodeURIComponent(domain)}`);
+          let zones;
+          try {
+            zones = await cf(`/zones?name=${encodeURIComponent(domain)}`);
+          } catch (error) {
+            if (error.payload?.errors?.some((item) => item.code === 10000)) {
+              console.warn(`Could not manage DNS for ${domain}: Cloudflare token is not authorized for the Zones API.`);
+              console.warn(`Create a proxied CNAME record for ${domain} pointing to ${pagesHostname}, or add Zone:Read and DNS:Edit permissions to the token.`);
+              process.exit(0);
+            }
+            throw error;
+          }
           const zone = zones.find((item) => item.name === domain);
           if (!zone) {
             throw new Error(`Cloudflare zone ${domain} was not found.`);
