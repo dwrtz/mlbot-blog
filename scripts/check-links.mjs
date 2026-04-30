@@ -10,9 +10,9 @@ const failures = [];
 
 for (const file of htmlFiles) {
   const html = await fs.readFile(path.join(root, file), "utf8");
-  const attrPattern = /\s(?:href|src)="([^"]+)"/g;
+  const attrPattern = /\s(?:href|src)=(?:"([^"]+)"|'([^']+)'|([^'"\s>]+))/g;
   for (const match of html.matchAll(attrPattern)) {
-    const target = match[1];
+    const target = match[1] ?? match[2] ?? match[3];
     if (/^(https?:|mailto:|tel:|#|data:)/.test(target)) continue;
     if (target.includes("{{")) {
       failures.push(`${file}: unresolved template in link ${target}`);
