@@ -177,17 +177,6 @@ img {
   padding: 1rem 0;
 }
 
-.card-image-link {
-  display: none;
-}
-
-.card-image {
-  width: 100%;
-  aspect-ratio: 1200 / 630;
-  object-fit: cover;
-  background: var(--code-bg);
-}
-
 .card-body {
   padding: 0;
 }

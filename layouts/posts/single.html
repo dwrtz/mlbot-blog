@@ -24,8 +24,22 @@
 
   {{ with index .Params.images 0 }}
     {{ with $.Resources.GetMatch . }}
+      {{ $cover480 := .Resize "480x webp q82" }}
+      {{ $cover760 := .Resize "760x webp q82" }}
       <figure class="cover-figure">
-        <img src="{{ .RelPermalink }}" alt="">
+        <picture>
+          <source
+            type="image/webp"
+            srcset="{{ $cover480.RelPermalink }} 480w, {{ $cover760.RelPermalink }} 760w"
+            sizes="(max-width: 792px) calc(100vw - 2rem), 760px">
+          <img
+            src="{{ $cover760.RelPermalink }}"
+            width="{{ $cover760.Width }}"
+            height="{{ $cover760.Height }}"
+            alt=""
+            fetchpriority="high"
+            decoding="async">
+        </picture>
       </figure>
     {{ end }}
   {{ end }}

@@ -1,11 +1,4 @@
 <article class="article-card">
-  {{ with index .Params.images 0 }}
-    {{ with $.Resources.GetMatch . }}
-      <a class="card-image-link" href="{{ $.RelPermalink }}" aria-label="{{ $.Title }}">
-        <img class="card-image" src="{{ .RelPermalink }}" alt="">
-      </a>
-    {{ end }}
-  {{ end }}
   <div class="card-body">
     <h2><a href="{{ .RelPermalink }}">{{ .Title }}</a></h2>
     {{ with .Description }}<p>{{ . }}</p>{{ end }}

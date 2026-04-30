@@ -4,7 +4,13 @@
 {{ $source := .Get "source" }}
 {{ with .Page.Resources.GetMatch $src }}
   <figure class="plot">
-    <img src="{{ .RelPermalink }}" alt="{{ $alt }}">
+    <img
+      src="{{ .RelPermalink }}"
+      width="{{ .Width }}"
+      height="{{ .Height }}"
+      alt="{{ $alt }}"
+      loading="lazy"
+      decoding="async">
     {{ if or $caption $source }}
       <figcaption>
         {{ with $caption }}{{ . }}{{ end }}
