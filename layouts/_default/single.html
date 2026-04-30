@@ -1,0 +1,9 @@
+{{ define "main" }}
+<article class="content-shell prose" data-pagefind-body>
+  <header class="page-header">
+    <h1>{{ .Title }}</h1>
+    {{ with .Description }}<p>{{ . }}</p>{{ end }}
+  </header>
+  {{ .Content }}
+</article>
+{{ end }}

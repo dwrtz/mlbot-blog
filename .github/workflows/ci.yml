@@ -1,0 +1,78 @@
+name: CI
+
+on:
+  pull_request:
+    branches:
+      - main
+      - live
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    name: Validate and build
+    runs-on: ubuntu-latest
+    env:
+      HUGO_VERSION: "0.161.0"
+      HUGO_ENVIRONMENT: "production"
+      HUGO_ENV: "production"
+      TZ: "Asia/Kolkata"
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: "npm"
+
+      - name: Install Hugo
+        shell: bash
+        run: |
+          set -euo pipefail
+          curl -L "https://github.com/gohugoio/hugo/releases/download/v${HUGO_VERSION}/hugo_extended_${HUGO_VERSION}_linux-amd64.tar.gz" -o hugo.tar.gz
+          tar -xzf hugo.tar.gz
+          sudo mv hugo /usr/local/bin/hugo
+          hugo version
+
+      - name: Install Node dependencies
+        run: npm ci
+
+      - name: Install local KaTeX assets
+        run: npm run setup:katex
+
+      - name: Validate content
+        run: npm run validate
+
+      - name: Generate Open Graph images
+        run: npm run generate-og
+
+      - name: Build related-post data
+        run: npm run build-related
+
+      - name: Build Hugo site
+        run: npm run build
+
+      - name: Build Pagefind index
+        run: npm run pagefind
+
+      - name: Check links
+        run: npm run check-links
+
+      - name: Upload built site artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: mlbot-blog-public
+          path: public
+          if-no-files-found: error

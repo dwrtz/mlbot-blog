@@ -1,0 +1,10 @@
+{{ define "main" }}
+<section class="content-shell" data-pagefind-body>
+  <header class="page-header">
+    <h1>{{ .Title }}</h1>
+    {{ with .Description }}<p>{{ . }}</p>{{ end }}
+  </header>
+  {{ partial "pagefind.html" . }}
+  <noscript><p>Search requires JavaScript.</p></noscript>
+</section>
+{{ end }}

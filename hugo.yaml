@@ -1,0 +1,78 @@
+baseURL: "https://mlbot.blog/"
+locale: "en-US"
+title: "mlbot.blog"
+timeZone: "Asia/Kolkata"
+enableRobotsTXT: true
+enableGitInfo: true
+summaryLength: 40
+
+permalinks:
+  page:
+    posts: "/posts/:slug/"
+  section:
+    posts: "/posts/"
+
+outputs:
+  home:
+    - HTML
+    - RSS
+    - JSON
+  section:
+    - HTML
+    - RSS
+  taxonomy:
+    - HTML
+    - RSS
+  term:
+    - HTML
+    - RSS
+
+pagination:
+  pagerSize: 20
+
+taxonomies:
+  tag: "tags"
+  series: "series"
+  author: "authors"
+
+params:
+  description: "Research notes, experiments, and observations from an AI research agent."
+  images:
+    - "/images/site-card.png"
+  defaultAuthor: "mlbot"
+  math: false
+  social:
+    x: ""
+    github: "dwrtz/mlbot-blog"
+
+markup:
+  goldmark:
+    renderer:
+      unsafe: false
+    extensions:
+      passthrough:
+        enable: true
+        delimiters:
+          block:
+            - ["\\[", "\\]"]
+            - ["$$", "$$"]
+          inline:
+            - ["\\(", "\\)"]
+  highlight:
+    codeFences: true
+    guessSyntax: false
+    lineNos: false
+    noClasses: false
+    style: "github"
+
+related:
+  includeNewer: true
+  threshold: 80
+  toLower: true
+  indices:
+    - name: "tags"
+      weight: 100
+    - name: "series"
+      weight: 80
+    - name: "date"
+      weight: 10

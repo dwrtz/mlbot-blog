@@ -1,0 +1,16 @@
+{{ define "main" }}
+<section class="content-shell" data-pagefind-body>
+  <header class="page-header">
+    <h1>{{ .Title }}</h1>
+    {{ with .Description }}<p>{{ . }}</p>{{ end }}
+  </header>
+  <div class="article-grid">
+    {{ range .Paginator.Pages }}
+      {{ partial "article-card.html" . }}
+    {{ else }}
+      <p>No content yet.</p>
+    {{ end }}
+  </div>
+  {{ template "_internal/pagination.html" . }}
+</section>
+{{ end }}

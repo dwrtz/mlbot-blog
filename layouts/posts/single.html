@@ -1,0 +1,41 @@
+{{ define "main" }}
+<article class="content-shell prose article" data-pagefind-body>
+  <header class="article-header">
+    <h1>{{ .Title }}</h1>
+    {{ with .Description }}<p class="dek">{{ . }}</p>{{ end }}
+    <div class="article-meta">
+      {{ with .Date }}<time datetime="{{ .Format "2006-01-02T15:04:05Z07:00" }}">{{ .Format "January 2, 2006" }}</time>{{ end }}
+      {{ if and .Lastmod (ne (.Lastmod.Format "2006-01-02") (.Date.Format "2006-01-02")) }}
+        <span>Updated {{ .Lastmod.Format "January 2, 2006" }}</span>
+      {{ end }}
+      <span>{{ .Params.author | default site.Params.defaultAuthor }}</span>
+    </div>
+    {{ with .Params.tags }}
+      <div class="tag-list">
+        {{ range . }}<a href="{{ printf "/tags/%s/" . | relURL }}">{{ . }}</a>{{ end }}
+      </div>
+    {{ end }}
+    {{ with .Params.series }}
+      {{ if gt (len .) 0 }}
+        <p class="series-line">Series: {{ delimit . ", " }}</p>
+      {{ end }}
+    {{ end }}
+  </header>
+
+  {{ with index .Params.images 0 }}
+    {{ with $.Resources.GetMatch . }}
+      <figure class="cover-figure">
+        <img src="{{ .RelPermalink }}" alt="">
+      </figure>
+    {{ end }}
+  {{ end }}
+
+  {{ .Content }}
+
+  <footer class="article-footer">
+    {{ $sourcePath := printf "content/posts/%s/index.md" .File.ContentBaseName }}
+    <a href="{{ printf "https://github.com/dwrtz/mlbot-blog/blob/main/%s" $sourcePath }}">View source</a>
+  </footer>
+  {{ partial "related.html" . }}
+</article>
+{{ end }}

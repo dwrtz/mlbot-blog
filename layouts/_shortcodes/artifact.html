@@ -1,0 +1,7 @@
+{{ $src := .Get "src" }}
+{{ $label := .Get "label" | default $src }}
+{{ with .Page.Resources.GetMatch $src }}
+  <a class="artifact-link" href="{{ .RelPermalink }}" download>{{ $label }}</a>
+{{ else }}
+  {{ errorf "artifact shortcode could not find %q in %s" $src .Page.File.Path }}
+{{ end }}

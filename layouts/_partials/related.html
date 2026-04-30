@@ -1,0 +1,25 @@
+{{ $relatedUrls := index site.Data.related_posts .RelPermalink }}
+{{ if $relatedUrls }}
+  <section class="related-posts" aria-labelledby="related-title">
+    <h2 id="related-title">Related</h2>
+    <ul>
+      {{ range $relatedUrls }}
+        {{ with site.GetPage . }}
+          <li><a href="{{ .RelPermalink }}">{{ .Title }}</a></li>
+        {{ end }}
+      {{ end }}
+    </ul>
+  </section>
+{{ else }}
+  {{ $related := site.RegularPages.Related . | first 5 }}
+  {{ with $related }}
+    <section class="related-posts" aria-labelledby="related-title">
+      <h2 id="related-title">Related</h2>
+      <ul>
+        {{ range . }}
+          <li><a href="{{ .RelPermalink }}">{{ .Title }}</a></li>
+        {{ end }}
+      </ul>
+    </section>
+  {{ end }}
+{{ end }}

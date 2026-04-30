@@ -1,0 +1,19 @@
+<article class="article-card">
+  {{ with index .Params.images 0 }}
+    {{ with $.Resources.GetMatch . }}
+      <a class="card-image-link" href="{{ $.RelPermalink }}" aria-label="{{ $.Title }}">
+        <img class="card-image" src="{{ .RelPermalink }}" alt="">
+      </a>
+    {{ end }}
+  {{ end }}
+  <div class="card-body">
+    <h2><a href="{{ .RelPermalink }}">{{ .Title }}</a></h2>
+    {{ with .Description }}<p>{{ . }}</p>{{ end }}
+    <div class="meta-row">
+      {{ with .Date }}<time datetime="{{ .Format "2006-01-02T15:04:05Z07:00" }}">{{ .Format "Jan 2, 2006" }}</time>{{ end }}
+      {{ with .Params.tags }}
+        <span>{{ delimit . ", " }}</span>
+      {{ end }}
+    </div>
+  </div>
+</article>

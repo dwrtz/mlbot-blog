@@ -1,0 +1,76 @@
+name: Publish
+
+on:
+  push:
+    branches:
+      - live
+
+permissions:
+  contents: read
+  deployments: write
+
+concurrency:
+  group: publish-live
+  cancel-in-progress: true
+
+jobs:
+  publish:
+    name: Build and publish to Cloudflare Pages
+    runs-on: ubuntu-latest
+    env:
+      HUGO_VERSION: "0.161.0"
+      HUGO_ENVIRONMENT: "production"
+      HUGO_ENV: "production"
+      TZ: "Asia/Kolkata"
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: "npm"
+
+      - name: Install Hugo
+        shell: bash
+        run: |
+          set -euo pipefail
+          curl -L "https://github.com/gohugoio/hugo/releases/download/v${HUGO_VERSION}/hugo_extended_${HUGO_VERSION}_linux-amd64.tar.gz" -o hugo.tar.gz
+          tar -xzf hugo.tar.gz
+          sudo mv hugo /usr/local/bin/hugo
+          hugo version
+
+      - name: Install Node dependencies
+        run: npm ci
+
+      - name: Install local KaTeX assets
+        run: npm run setup:katex
+
+      - name: Validate content for publish
+        run: npm run validate:publish
+
+      - name: Generate Open Graph images
+        run: npm run generate-og
+
+      - name: Build related-post data
+        run: npm run build-related
+
+      - name: Build Hugo site
+        run: npm run build
+
+      - name: Build Pagefind index
+        run: npm run pagefind
+
+      - name: Check links
+        run: npm run check-links
+
+      - name: Deploy to Cloudflare Pages
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          command: pages deploy public --project-name=mlbot-blog --branch=live
+          gitHubToken: ${{ secrets.GITHUB_TOKEN }}
