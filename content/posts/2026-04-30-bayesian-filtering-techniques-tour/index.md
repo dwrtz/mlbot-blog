@@ -63,18 +63,18 @@ Related shorter posts:
 
 ## The filtering problem
 
-A state-space model has hidden states \(z\_t\), observations \(y\_t\), optional
-observed covariates \(x\_t\), a transition model, and an observation model:
+A state-space model has hidden states \(z&#95;t\), observations \(y&#95;t\), optional
+observed covariates \(x&#95;t\), a transition model, and an observation model:
 
 \[
-p(z\_{0:T}, y\_{1:T} \mid x\_{1:T})
-= p(z\_0)\prod\_{t=1}^T p(z\_t \mid z\_{t-1})p(y\_t \mid z\_t, x\_t).
+p(z&#95;{0:T}, y&#95;{1:T} \mid x&#95;{1:T})
+= p(z&#95;0)\prod&#95;{t=1}^T p(z&#95;t \mid z&#95;{t-1})p(y&#95;t \mid z&#95;t, x&#95;t).
 \]
 
 The online filtering posterior is:
 
 \[
-p(z\_t \mid y\_{1:t}, x\_{1:t}).
+p(z&#95;t \mid y&#95;{1:t}, x&#95;{1:t}).
 \]
 
 For a linear-Gaussian model, the Kalman filter gives this posterior exactly.
@@ -84,23 +84,23 @@ an approximate belief family and an update rule.
 The strict filter contract in these experiments is:
 
 \[
-q^F\_t = \operatorname{update}(q^F\_{t-1}, x\_t, y\_t).
+q^F&#95;t = \operatorname{update}(q^F&#95;{t-1}, x&#95;t, y&#95;t).
 \]
 
 The update is online. It does not get future observations. The filter must carry
-an explicit posterior belief \(q^F\_t(z\_t)\), not just a hidden RNN state.
+an explicit posterior belief \(q^F&#95;t(z&#95;t)\), not just a hidden RNN state.
 
 The variational Bayesian filtering form used in the repo carries one more piece:
 a backward conditional over the previous state. The local edge posterior is
 factorized as:
 
 \[
-q^E\_t(z\_t, z\_{t-1})
-= q^F\_t(z\_t)q^B\_t(z\_{t-1}\mid z\_t).
+q^E&#95;t(z&#95;t, z&#95;{t-1})
+= q^F&#95;t(z&#95;t)q^B&#95;t(z&#95;{t-1}\mid z&#95;t).
 \]
 
-This edge view matters because the transition model couples \(z\_{t-1}\) and
-\(z\_t\). If the filter emits both a current marginal and a backward conditional,
+This edge view matters because the transition model couples \(z&#95;{t-1}\) and
+\(z&#95;t\). If the filter emits both a current marginal and a backward conditional,
 we can score the local edge against the generative model.
 
 ## The two benchmark worlds
@@ -108,11 +108,11 @@ we can score the local edge against the generative model.
 The first world is scalar linear-Gaussian:
 
 \[
-z\_t = z\_{t-1} + w\_t,\quad w\_t \sim \mathcal{N}(0,Q),
+z&#95;t = z&#95;{t-1} + w&#95;t,\quad w&#95;t \sim \mathcal{N}(0,Q),
 \]
 
 \[
-y\_t = x\_t z\_t + v\_t,\quad v\_t \sim \mathcal{N}(0,R).
+y&#95;t = x&#95;t z&#95;t + v&#95;t,\quad v&#95;t \sim \mathcal{N}(0,R).
 \]
 
 Here we know the exact answer. This is where we check the mechanics: Kalman
@@ -122,12 +122,12 @@ calibration.
 The second world keeps the random-walk state but changes the observation:
 
 \[
-y\_t = x\_t \sin(z\_t) + v\_t,\quad v\_t \sim \mathcal{N}(0,R).
+y&#95;t = x&#95;t \sin(z&#95;t) + v&#95;t,\quad v&#95;t \sim \mathcal{N}(0,R).
 \]
 
 This model is scalar, but it is not easy. The sine observation is periodic, so
-different latent states can explain the same observation. When \(x\_t\) is small,
-the measurement carries little information about \(z\_t\). The stress patterns
+different latent states can explain the same observation. When \(x&#95;t\) is small,
+the measurement carries little information about \(z&#95;t\). The stress patterns
 used in the reports are:
 
 | Pattern | What it tests |
@@ -150,8 +150,8 @@ State NLL is the negative log likelihood of the true latent state under the
 filtering belief:
 
 \[
-\operatorname{NLL}\_z
-= -\frac{1}{BT}\sum\_{b,t}\log q^F\_{b,t}(z\_{b,t}^{\mathrm{true}}).
+\operatorname{NLL}&#95;z
+= -\frac{1}{BT}\sum&#95;{b,t}\log q^F&#95;{b,t}(z&#95;{b,t}^{\mathrm{true}}).
 \]
 
 Coverage 90 is the fraction of true states inside the nominal 90 percent
@@ -163,8 +163,8 @@ filtering variance:
 
 \[
 \operatorname{var\ ratio}
-= \frac{\mathbb{E}\_{b,t}[\operatorname{Var}\_{q}(z\_{b,t})]}
-{\mathbb{E}\_{b,t}[\operatorname{Var}\_{\mathrm{ref}}(z\_{b,t})]}.
+= \frac{\mathbb{E}&#95;{b,t}[\operatorname{Var}&#95;{q}(z&#95;{b,t})]}
+{\mathbb{E}&#95;{b,t}[\operatorname{Var}&#95;{\mathrm{ref}}(z&#95;{b,t})]}.
 \]
 
 A variance ratio far below one is under-dispersion. It means the filter is too
@@ -173,7 +173,7 @@ confident. In these experiments, under-dispersion is the recurring failure mode.
 Predictive-y NLL scores the next measurement before assimilation:
 
 \[
--\log p\_q(y\_t \mid y\_{<t}, x\_{\leq t}).
+-\log p&#95;q(y&#95;t \mid y&#95;{<t}, x&#95;{\leq t}).
 \]
 
 This is important because a filter can put density on the true latent state
@@ -200,32 +200,32 @@ shows that the objective found it without hidden help.
 ## Technique 1: exact Kalman filtering
 
 The Kalman filter is the anchor. In the scalar linear-Gaussian model, if the
-prior belief is \(z\_{t-1}\sim \mathcal{N}(m\_{t-1},P\_{t-1})\), then the predictive
+prior belief is \(z&#95;{t-1}\sim \mathcal{N}(m&#95;{t-1},P&#95;{t-1})\), then the predictive
 state is:
 
 \[
-m^-\_t = m\_{t-1},\quad P^-\_t = P\_{t-1} + Q.
+m^-&#95;t = m&#95;{t-1},\quad P^-&#95;t = P&#95;{t-1} + Q.
 \]
 
-For observation \(y\_t = x\_t z\_t + v\_t\), the innovation and Kalman gain are:
+For observation \(y&#95;t = x&#95;t z&#95;t + v&#95;t\), the innovation and Kalman gain are:
 
 \[
-e\_t = y\_t - x\_t m^-\_t,
-\]
-
-\[
-S\_t = x\_t^2P^-\_t + R,
+e&#95;t = y&#95;t - x&#95;t m^-&#95;t,
 \]
 
 \[
-K\_t = \frac{P^-\_t x\_t}{S\_t}.
+S&#95;t = x&#95;t^2P^-&#95;t + R,
+\]
+
+\[
+K&#95;t = \frac{P^-&#95;t x&#95;t}{S&#95;t}.
 \]
 
 The filtering update is:
 
 \[
-m\_t = m^-\_t + K\_t e\_t,\quad
-P\_t = P^-\_t - K\_t x\_t P^-\_t.
+m&#95;t = m^-&#95;t + K&#95;t e&#95;t,\quad
+P&#95;t = P^-&#95;t - K&#95;t x&#95;t P^-&#95;t.
 \]
 
 The repo keeps this exact path because it gives a hard standard for state NLL,
@@ -257,12 +257,12 @@ MC ELBO row became much too narrow.
 The VBF model represents a local edge:
 
 \[
-q^E\_t(z\_t,z\_{t-1}) = q^F\_t(z\_t)q^B\_t(z\_{t-1}\mid z\_t).
+q^E&#95;t(z&#95;t,z&#95;{t-1}) = q^F&#95;t(z&#95;t)q^B&#95;t(z&#95;{t-1}\mid z&#95;t).
 \]
 
-In the frozen-marginal control, \(q^F\_t\) is not learned. It is set to the exact
+In the frozen-marginal control, \(q^F&#95;t\) is not learned. It is set to the exact
 Kalman marginal. The learned part is only the backward conditional
-\(q^B\_t(z\_{t-1}\mid z\_t)\).
+\(q^B&#95;t(z&#95;{t-1}\mid z&#95;t)\).
 
 Why is that useful? It isolates whether the edge/backward machinery is correct.
 If the filtering marginal is exact and the backward head is trained, then any
@@ -309,8 +309,8 @@ Supervised distillation uses an oracle edge posterior or reference filtering
 beliefs as targets. The most direct loss is a Gaussian KL:
 
 \[
-\operatorname{KL}\left(q\_{\mathrm{oracle}}(z\_t,z\_{t-1})
-\Vert q\_{\theta}(z\_t,z\_{t-1})\right).
+\operatorname{KL}\left(q&#95;{\mathrm{oracle}}(z&#95;t,z&#95;{t-1})
+\Vert q&#95;{\theta}(z&#95;t,z&#95;{t-1})\right).
 \]
 
 Teacher forcing feeds the model the reference previous belief. Self-fed rollout
@@ -337,19 +337,19 @@ model:
 
 \[
 \begin{aligned}
-\mathcal{L}\_t
-&= \mathbb{E}\_{q^F\_t(z\_t)q^B\_t(z\_{t-1}\mid z\_t)}
+\mathcal{L}&#95;t
+&= \mathbb{E}&#95;{q^F&#95;t(z&#95;t)q^B&#95;t(z&#95;{t-1}\mid z&#95;t)}
 \big[
-\log p(y\_t\mid z\_t,x\_t)
-{}+ \log p(z\_t\mid z\_{t-1}) \\
-&\quad {}+ \log q^F\_{t-1}(z\_{t-1})
-{}- \log q^F\_t(z\_t)
-{}- \log q^B\_t(z\_{t-1}\mid z\_t)
+\log p(y&#95;t\mid z&#95;t,x&#95;t)
+{}+ \log p(z&#95;t\mid z&#95;{t-1}) \\
+&\quad {}+ \log q^F&#95;{t-1}(z&#95;{t-1})
+{}- \log q^F&#95;t(z&#95;t)
+{}- \log q^B&#95;t(z&#95;{t-1}\mid z&#95;t)
 \big].
 \end{aligned}
 \]
 
-The JAX code samples \(z\_t\), samples \(z\_{t-1}\) from the backward conditional,
+The JAX code samples \(z&#95;t\), samples \(z&#95;{t-1}\) from the backward conditional,
 and computes the log weight:
 
 ```python
@@ -383,8 +383,8 @@ variance to reference variance. For example:
 
 \[
 \left(\log
-\frac{\mathbb{E}[\operatorname{Var}\_q(z\_t)]}
-{\mathbb{E}[\operatorname{Var}\_{\mathrm{ref}}(z\_t)]}
+\frac{\mathbb{E}[\operatorname{Var}&#95;q(z&#95;t)]}
+{\mathbb{E}[\operatorname{Var}&#95;{\mathrm{ref}}(z&#95;t)]}
 \right)^2.
 \]
 
@@ -416,13 +416,13 @@ For the nonlinear scalar benchmark, the reference filter discretizes a grid over
 by the nonlinear likelihood, and renormalizes:
 
 \[
-\tilde{p}\_t(z\_t)
-= \int p(z\_t\mid z\_{t-1})p\_{t-1}(z\_{t-1})\,dz\_{t-1},
+\tilde{p}&#95;t(z&#95;t)
+= \int p(z&#95;t\mid z&#95;{t-1})p&#95;{t-1}(z&#95;{t-1})\,dz&#95;{t-1},
 \]
 
 \[
-p\_t(z\_t)
-\propto p(y\_t\mid z\_t,x\_t)\tilde{p}\_t(z\_t).
+p&#95;t(z&#95;t)
+\propto p(y&#95;t\mid z&#95;t,x&#95;t)\tilde{p}&#95;t(z&#95;t).
 \]
 
 In code, that is a log-space matrix update over the grid:
@@ -445,10 +445,10 @@ Reference moment distillation trains a neural filter to match grid-reference
 moments:
 
 \[
-\frac{(m\_\theta - m\_{\mathrm{ref}})^2}
-{P\_{\mathrm{ref}}}
+\frac{(m&#95;\theta - m&#95;{\mathrm{ref}})^2}
+{P&#95;{\mathrm{ref}}}
 +
-\left(\log P\_\theta - \log P\_{\mathrm{ref}}\right)^2.
+\left(\log P&#95;\theta - \log P&#95;{\mathrm{ref}}\right)^2.
 \]
 
 This is not a fair unsupervised method, but it answers a critical question:
@@ -491,9 +491,9 @@ short latent path from the terminal filtering marginal and backward conditionals
 For a window ending at \(s+H\):
 
 \[
-q(z\_{s-1:s+H})
-= q^F\_{s+H}(z\_{s+H})
-\prod\_{t=s}^{s+H}q^B\_t(z\_{t-1}\mid z\_t).
+q(z&#95;{s-1:s+H})
+= q^F&#95;{s+H}(z&#95;{s+H})
+\prod&#95;{t=s}^{s+H}q^B&#95;t(z&#95;{t-1}\mid z&#95;t).
 \]
 
 The objective scores the sampled path under the carried prior and the generative
@@ -501,14 +501,14 @@ model:
 
 \[
 \begin{aligned}
-\mathcal{L}\_{s,H}
-&= \mathbb{E}\_{q}
+\mathcal{L}&#95;{s,H}
+&= \mathbb{E}&#95;{q}
 \big[
-\log q^F\_{s-1}(z\_{s-1})
-{}+ \sum\_{t=s}^{s+H}\log p(z\_t\mid z\_{t-1}) \\
-&\quad {}+ \sum\_{t=s}^{s+H}\log p(y\_t\mid z\_t,x\_t)
-{}- \log q^F\_{s+H}(z\_{s+H})
-{}- \sum\_{t=s}^{s+H}\log q^B\_t(z\_{t-1}\mid z\_t)
+\log q^F&#95;{s-1}(z&#95;{s-1})
+{}+ \sum&#95;{t=s}^{s+H}\log p(z&#95;t\mid z&#95;{t-1}) \\
+&\quad {}+ \sum&#95;{t=s}^{s+H}\log p(y&#95;t\mid z&#95;t,x&#95;t)
+{}- \log q^F&#95;{s+H}(z&#95;{s+H})
+{}- \sum&#95;{t=s}^{s+H}\log q^B&#95;t(z&#95;{t-1}\mid z&#95;t)
 \big].
 \end{aligned}
 \]
@@ -541,12 +541,12 @@ very low.
 
 A filter should be useful before it assimilates the current measurement. The
 pre-assimilation predictive term asks whether the previous filtering belief,
-propagated through the transition, assigns probability to \(y\_t\):
+propagated through the transition, assigns probability to \(y&#95;t\):
 
 \[
-p\_q(y\_t\mid y\_{<t},x\_t)
-= \int p(y\_t\mid z\_t,x\_t)
-\left[\int p(z\_t\mid z\_{t-1})q^F\_{t-1}(z\_{t-1})dz\_{t-1}\right]dz\_t.
+p&#95;q(y&#95;t\mid y&#95;{<t},x&#95;t)
+= \int p(y&#95;t\mid z&#95;t,x&#95;t)
+\left[\int p(z&#95;t\mid z&#95;{t-1})q^F&#95;{t-1}(z&#95;{t-1})dz&#95;{t-1}\right]dz&#95;t.
 \]
 
 For the sine observation this is computed with Gauss-Hermite quadrature:
@@ -559,17 +559,17 @@ log_likelihood = normal_log_prob(y[..., None], obs_mean, r)
 log_prob_y = logsumexp(log_weights + log_likelihood, axis=-1) - 0.5 * log(pi)
 ```
 
-This term is causal only if the update path has not already used \(y\_t\) to
+This term is causal only if the update path has not already used \(y&#95;t\) to
 construct the prediction. The reports treat that as a guardrail.
 
 ## Technique 12: masked-y span training
 
 Masked-y training withholds measurements from the update path for random points
-or spans. When \(y\_t\) is masked, the filter should perform the exact transition
+or spans. When \(y&#95;t\) is masked, the filter should perform the exact transition
 prediction:
 
 \[
-m\_t = m\_{t-1},\quad P\_t = P\_{t-1} + Q.
+m&#95;t = m&#95;{t-1},\quad P&#95;t = P&#95;{t-1} + Q.
 \]
 
 That behavior is tested in the nonlinear reference tests. The purpose is to make
@@ -582,7 +582,7 @@ The sine likelihood is periodic, so a single Gaussian belief can be a poor
 description of the posterior. The mixture branch uses:
 
 \[
-q^F\_t(z\_t) = \sum\_{k=1}^K \pi\_{t,k}\mathcal{N}(z\_t;\mu\_{t,k},\sigma^2\_{t,k}).
+q^F&#95;t(z&#95;t) = \sum&#95;{k=1}^K \pi&#95;{t,k}\mathcal{N}(z&#95;t;\mu&#95;{t,k},\sigma^2&#95;{t,k}).
 \]
 
 The direct mixture head emits weights, component means, component variances, and
@@ -601,18 +601,18 @@ pairing a mixture family with a multi-sample objective.
 
 ## Technique 14: IWAE window objectives
 
-The IWAE objective changes how samples are combined. If \(w\_k\) are importance
+The IWAE objective changes how samples are combined. If \(w&#95;k\) are importance
 weights for sampled paths, the ordinary ELBO averages log weights:
 
 \[
-\mathcal{L}\_{\mathrm{ELBO}} = \frac{1}{K}\sum\_{k=1}^K \log w\_k.
+\mathcal{L}&#95;{\mathrm{ELBO}} = \frac{1}{K}\sum&#95;{k=1}^K \log w&#95;k.
 \]
 
 IWAE uses:
 
 \[
-\mathcal{L}\_{\mathrm{IWAE}}
-= \log\left(\frac{1}{K}\sum\_{k=1}^K w\_k\right).
+\mathcal{L}&#95;{\mathrm{IWAE}}
+= \log\left(\frac{1}{K}\sum&#95;{k=1}^K w&#95;k\right).
 \]
 
 In code:
@@ -659,9 +659,9 @@ observation-prediction loss.
 The Renyi objective generalizes the sample aggregation:
 
 \[
-\mathcal{L}\_{\alpha}
+\mathcal{L}&#95;{\alpha}
 = \frac{1}{1-\alpha}
-\log\left(\frac{1}{K}\sum\_{k=1}^K w\_k^{1-\alpha}\right).
+\log\left(\frac{1}{K}\sum&#95;{k=1}^K w&#95;k^{1-\alpha}\right).
 \]
 
 As \(\alpha\to 1\), it approaches the ELBO. Smaller values change the pressure
@@ -676,8 +676,8 @@ FIVO-style objectives estimate a sequence marginal likelihood with particles and
 resampling. The broad shape is:
 
 \[
-\sum\_{t=1}^T
-\log\left(\frac{1}{K}\sum\_{k=1}^K w\_{t,k}\right),
+\sum&#95;{t=1}^T
+\log\left(\frac{1}{K}\sum&#95;{k=1}^K w&#95;{t,k}\right),
 \]
 
 where particles are propagated and optionally resampled over time.
@@ -692,14 +692,14 @@ The bridge proposal combines a transition from the previous particle with the
 filter belief at the current time. In Gaussian form:
 
 \[
-\sigma^2\_{\mathrm{bridge}}
-= \left(\frac{1}{Q}+\frac{1}{\sigma\_t^2}\right)^{-1},
+\sigma^2&#95;{\mathrm{bridge}}
+= \left(\frac{1}{Q}+\frac{1}{\sigma&#95;t^2}\right)^{-1},
 \]
 
 \[
-\mu\_{\mathrm{bridge}}
-= \sigma^2\_{\mathrm{bridge}}
-\left(\frac{z\_{t-1}}{Q}+\frac{\mu\_t}{\sigma\_t^2}\right).
+\mu&#95;{\mathrm{bridge}}
+= \sigma^2&#95;{\mathrm{bridge}}
+\left(\frac{z&#95;{t-1}}{Q}+\frac{\mu&#95;t}{\sigma&#95;t^2}\right).
 \]
 
 The latest short FIVO bridge resampling suite shows the method is sensitive to
@@ -713,13 +713,13 @@ A bootstrap particle filter is also used as a diagnostic reference. It samples
 particles from the transition:
 
 \[
-z\_t^{(k)} \sim p(z\_t\mid z\_{t-1}^{(k)}),
+z&#95;t^{(k)} \sim p(z&#95;t\mid z&#95;{t-1}^{(k)}),
 \]
 
 weights them by the observation likelihood:
 
 \[
-w\_t^{(k)} \propto p(y\_t\mid z\_t^{(k)},x\_t),
+w&#95;t^{(k)} \propto p(y&#95;t\mid z&#95;t^{(k)},x&#95;t),
 \]
 
 then resamples.
@@ -734,10 +734,10 @@ predictive-y behavior.
 The quadrature and ADF branches start from the local tilted distribution:
 
 \[
-\tilde{p}(z\_t)
+\tilde{p}(z&#95;t)
 \propto
-p(y\_t\mid z\_t,x\_t)
-\int p(z\_t\mid z\_{t-1})q^F\_{t-1}(z\_{t-1})\,dz\_{t-1}.
+p(y&#95;t\mid z&#95;t,x&#95;t)
+\int p(z&#95;t\mid z&#95;{t-1})q^F&#95;{t-1}(z&#95;{t-1})\,dz&#95;{t-1}.
 \]
 
 Then they project \(\tilde{p}\) back into the chosen belief family.
@@ -745,10 +745,10 @@ Then they project \(\tilde{p}\) back into the chosen belief family.
 For a Gaussian ADF update, the projection is moment matching:
 
 \[
-q^F\_t(z\_t) = \mathcal{N}
+q^F&#95;t(z&#95;t) = \mathcal{N}
 \left(
-\mathbb{E}\_{\tilde{p}}[z\_t],
-\operatorname{Var}\_{\tilde{p}}[z\_t]
+\mathbb{E}&#95;{\tilde{p}}[z&#95;t],
+\operatorname{Var}&#95;{\tilde{p}}[z&#95;t]
 \right).
 \]
 
