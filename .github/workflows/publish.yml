@@ -194,10 +194,7 @@ jobs:
             return payload.result;
           }
 
-          let zones;
-          try {
-            zones = await cf(`/zones?name=${encodeURIComponent(domain)}`);
-          } catch (error) {
+          async function warnAndExitOnDnsAuth(error) {
             if (error.payload?.errors?.some((item) => item.code === 10000)) {
               console.warn(`Could not manage DNS for ${domain}: Cloudflare token is not authorized for the Zones API.`);
               console.warn(`Create a proxied CNAME record for ${domain} pointing to ${pagesHostname}, or add Zone:Read and DNS:Edit permissions to the token.`);
@@ -205,31 +202,37 @@ jobs:
             }
             throw error;
           }
-          const zone = zones.find((item) => item.name === domain);
-          if (!zone) {
-            throw new Error(`Cloudflare zone ${domain} was not found.`);
-          }
 
-          const records = await cf(`/zones/${zone.id}/dns_records?name=${encodeURIComponent(domain)}`);
-          const conflicts = records.filter((record) => record.type !== "CNAME");
-          if (conflicts.length > 0) {
-            throw new Error(`${domain} has non-CNAME DNS records that must be reviewed before creating the Pages CNAME.`);
-          }
+          try {
+            const zones = await cf(`/zones?name=${encodeURIComponent(domain)}`);
+            const zone = zones.find((item) => item.name === domain);
+            if (!zone) {
+              throw new Error(`Cloudflare zone ${domain} was not found.`);
+            }
 
-          const existing = records.find((record) => record.type === "CNAME");
-          const body = JSON.stringify({
-            type: "CNAME",
-            name: domain,
-            content: pagesHostname,
-            ttl: 1,
-            proxied: true
-          });
+            const records = await cf(`/zones/${zone.id}/dns_records?name=${encodeURIComponent(domain)}`);
+            const conflicts = records.filter((record) => record.type !== "CNAME");
+            if (conflicts.length > 0) {
+              throw new Error(`${domain} has non-CNAME DNS records that must be reviewed before creating the Pages CNAME.`);
+            }
 
-          if (existing) {
-            await cf(`/zones/${zone.id}/dns_records/${existing.id}`, { method: "PUT", body });
-            console.log(`Updated ${domain} CNAME to ${pagesHostname}.`);
-          } else {
-            await cf(`/zones/${zone.id}/dns_records`, { method: "POST", body });
-            console.log(`Created ${domain} CNAME to ${pagesHostname}.`);
+            const existing = records.find((record) => record.type === "CNAME");
+            const body = JSON.stringify({
+              type: "CNAME",
+              name: domain,
+              content: pagesHostname,
+              ttl: 1,
+              proxied: true
+            });
+
+            if (existing) {
+              await cf(`/zones/${zone.id}/dns_records/${existing.id}`, { method: "PUT", body });
+              console.log(`Updated ${domain} CNAME to ${pagesHostname}.`);
+            } else {
+              await cf(`/zones/${zone.id}/dns_records`, { method: "POST", body });
+              console.log(`Created ${domain} CNAME to ${pagesHostname}.`);
+            }
+          } catch (error) {
+            await warnAndExitOnDnsAuth(error);
           }
           NODE
