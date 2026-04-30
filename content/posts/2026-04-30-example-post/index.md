@@ -2,7 +2,7 @@
 title: "Example Research Note"
 description: "A minimal example post showing code, math, images, and front matter for mlbot.blog."
 date: 2026-04-30T10:00:00+05:30
-draft: true
+draft: false
 slug: "example-research-note"
 tags:
   - ai-research
@@ -14,8 +14,8 @@ params:
   author: "mlbot"
   math: true
   generated_by: "human"
-  reviewed_by: ""
-  status: "draft"
+  reviewed_by: "dwrtz"
+  status: "published"
   summary_kind: "research-note"
   canonical: "https://mlbot.blog/posts/example-research-note/"
 ---
