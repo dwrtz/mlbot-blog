@@ -247,10 +247,11 @@ The most relevant source files in [`dwrtz/ml-examples`](https://github.com/dwrtz
 
 The copied review artifacts for this post are:
 
-- [selected metrics](artifacts/selected-metrics.csv)
-- [K5 rollout-normalizer summary](artifacts/k5-rollout-normalizer-summary.md)
-- [alias shrink summary](artifacts/alias-shrink-summary.md)
-- [component stability summary](artifacts/component-stability-summary.md)
+- [selected metrics table](artifacts/selected-metrics-summary)
+- [selected metrics CSV](artifacts/selected-metrics.csv)
+- [K5 rollout-normalizer summary](artifacts/k5-rollout-normalizer-summary)
+- [alias shrink summary](artifacts/alias-shrink-summary)
+- [component stability summary](artifacts/component-stability-summary)
 
 The short version is:
 
