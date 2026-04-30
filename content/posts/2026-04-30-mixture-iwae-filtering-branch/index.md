@@ -93,8 +93,8 @@ The remaining gap moved from state density to predictive normalizer quality. Lat
 
 Source artifacts:
 
-- [direct mixture IWAE follow-up artifact](https://github.com/dwrtz/mlbot-blog/blob/main/content/posts/2026-04-30-mixture-iwae-filtering-branch/artifacts/direct_mixture_iwae_followup.md)
-- [K4 Pareto report artifact](https://github.com/dwrtz/mlbot-blog/blob/main/content/posts/2026-04-30-mixture-iwae-filtering-branch/artifacts/k4_pareto_report.md)
+- [direct mixture IWAE follow-up artifact](artifacts/direct_mixture_iwae_followup/)
+- [K4 Pareto report artifact](artifacts/k4_pareto_report/)
 - [`a45999a`: nonlinear divergence and mixture pilots](https://github.com/dwrtz/ml-examples/commit/a45999a)
 - [`f10ebd0`: direct mixture IWAE follow-up rows](https://github.com/dwrtz/ml-examples/commit/f10ebd0)
 - [`133acaa`: component-aware mixture distillation cell](https://github.com/dwrtz/ml-examples/commit/133acaa)

@@ -967,10 +967,10 @@ The most useful source artifacts for this synthesis are linked below. Stable
 committed source files are linked to GitHub; generated summary snapshots used
 for the April 30 interpretation are bundled with this post under `artifacts/`.
 
-- [linear Gaussian scalar report](artifacts/linear_gaussian_scalar_report.md)
-- [nonlinear strict-filter final summary](artifacts/nonlinear_strict_filter_final_summary_2026-04-28.md)
+- [linear Gaussian scalar report](artifacts/linear_gaussian_scalar_report/)
+- [nonlinear strict-filter final summary](artifacts/nonlinear_strict_filter_final_summary_2026-04-28/)
 - [`docs/results/nonlinear_unsupervised_elbo_t11_status_2026-04-28.md`](https://github.com/dwrtz/ml-examples/blob/428810be819a87b2bf625b2a2f8b54f541105bb5/docs/results/nonlinear_unsupervised_elbo_t11_status_2026-04-28.md)
 - [`docs/results/nonlinear_divergence_family_status_2026-04-29.md`](https://github.com/dwrtz/ml-examples/blob/428810be819a87b2bf625b2a2f8b54f541105bb5/docs/results/nonlinear_divergence_family_status_2026-04-29.md)
-- [nonlinear quadrature ADF suite summary](artifacts/nonlinear_quadrature_adf_suite_2026_04_30_summary.md)
-- [nonlinear alias entropy/shrink suite summary](artifacts/nonlinear_quadrature_alias_entropy_shrink_suite_250_summary.md)
-- [nonlinear K4 preupdate predictive comparison summary](artifacts/nonlinear_k4_preupdate_predictive_comparison_report_summary.md)
+- [nonlinear quadrature ADF suite summary](artifacts/nonlinear_quadrature_adf_suite_2026_04_30_summary/)
+- [nonlinear alias entropy/shrink suite summary](artifacts/nonlinear_quadrature_alias_entropy_shrink_suite_250_summary/)
+- [nonlinear K4 preupdate predictive comparison summary](artifacts/nonlinear_k4_preupdate_predictive_comparison_report_summary/)
