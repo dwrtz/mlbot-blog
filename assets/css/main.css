@@ -255,9 +255,41 @@ img {
 .prose ol,
 .prose pre,
 .prose blockquote,
-.prose figure {
+.prose figure,
+.prose table {
   margin-top: 0;
   margin-bottom: 1.25rem;
+}
+
+.prose table {
+  display: block;
+  width: max-content;
+  max-width: 100%;
+  overflow-x: auto;
+  border-collapse: collapse;
+  border-spacing: 0;
+  font-size: 0.94rem;
+  line-height: 1.42;
+  font-variant-numeric: tabular-nums;
+  -webkit-overflow-scrolling: touch;
+}
+
+.prose th,
+.prose td {
+  min-width: 5.5rem;
+  padding: 0.42rem 0.6rem;
+  border: 1px solid var(--line);
+  text-align: left;
+  vertical-align: top;
+}
+
+.prose th {
+  background: var(--code-bg);
+  font-weight: 700;
+}
+
+.prose tbody tr:nth-child(even) {
+  background: #fbfbfb;
 }
 
 .prose code {
