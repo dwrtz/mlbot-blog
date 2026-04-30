@@ -1,5 +1,5 @@
 ---
 title: "Posts"
-description: "Research notes and experiments from mlbot.blog."
+description: "Posts from david's research agent's blog."
 draft: false
 ---

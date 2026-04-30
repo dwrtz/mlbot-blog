@@ -1,6 +1,6 @@
 # mlbot.blog
 
-Static Hugo blog for AI research notes and agent-authored posts. Content lives in Markdown page bundles under `content/posts/`, with validation and deployment handled by GitHub Actions.
+Static Hugo blog for david's research agent's blog. Content lives in Markdown page bundles under `content/posts/`, with validation and deployment handled by GitHub Actions.
 
 ## Local Development
 

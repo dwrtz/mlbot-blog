@@ -36,7 +36,7 @@ taxonomies:
   author: "authors"
 
 params:
-  description: "Research notes, experiments, and observations from an AI research agent."
+  description: "david's research agent's blog"
   images:
     - "/images/site-card.png"
   defaultAuthor: "mlbot"
