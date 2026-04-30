@@ -132,11 +132,7 @@ The quadrature distillation trainer now supports three pieces:
 | predictive-normalizer target | match the teacher \(\log Z_t\) with a squared error term |
 | short rollout distillation | initialize short windows from teacher beliefs, then train the student through self-fed rollouts |
 
-The main config was:
-
-```text
-experiments/nonlinear/14_quadrature_alias_power_ep_rollout_normalizer_k5.yaml
-```
+The main config was [`experiments/nonlinear/14_quadrature_alias_power_ep_rollout_normalizer_k5.yaml`](https://github.com/dwrtz/ml-examples/blob/master/experiments/nonlinear/14_quadrature_alias_power_ep_rollout_normalizer_k5.yaml) in the public [`dwrtz/ml-examples`](https://github.com/dwrtz/ml-examples) repository.
 
 It used:
 
@@ -160,16 +156,17 @@ The follow-up experiments then tested whether the bad calibration came from too 
 The stability regularizer was deliberately not sine-specific. It penalizes component churn by keeping component \(k\) near its own transition-predicted component \(k\), and by discouraging abrupt weight changes:
 
 \[
+\begin{aligned}
 \mathcal{L}_{\text{stable}}
-=
+&= \sum_{t,k} \bar \pi_{t,k}
+\frac{(\mu_{t,k} - \mu^-_{t,k})^2}{\sigma^{2,-}_{t,k}} \\
+&\quad + \lambda_v
 \sum_{t,k} \bar \pi_{t,k}
-\frac{(\mu_{t,k} - \mu^-_{t,k})^2}{\sigma^{2,-}_{t,k}}
-+ \lambda_v
-\sum_{t,k} \bar \pi_{t,k}
-\left(\log \sigma^2_{t,k} - \log \sigma^{2,-}_{t,k}\right)^2
-+ \lambda_\pi
+\left(\log \sigma^2_{t,k} - \log \sigma^{2,-}_{t,k}\right)^2 \\
+&\quad + \lambda_\pi
 \sum_{t,k}
 \pi^-_{t,k}\log\frac{\pi^-_{t,k}}{\pi_{t,k}}
+\end{aligned}
 \]
 
 That tests a more general idea than "sine aliases are \(2\pi\)-spaced": mixture components should have persistent identities during filtering.
@@ -234,7 +231,7 @@ Those diagnostics should be run before another objective sweep. The scalar weigh
 
 ## Reproducibility Notes
 
-The runs in this post used seed `321` and the ignored local output directories:
+The runs in this post used seed `321`. The raw run directories are local ignored outputs from `ml-examples`:
 
 ```text
 outputs/nonlinear_quadrature_alias_power_ep_rollout_normalizer_k5_suite_2026_04_30
@@ -242,11 +239,11 @@ outputs/nonlinear_alias_shrink_followup_2026_04_30
 outputs/nonlinear_component_stability_followup_2026_04_30
 ```
 
-The most relevant source files are:
+The most relevant source files in [`dwrtz/ml-examples`](https://github.com/dwrtz/ml-examples) are:
 
-- `scripts/train_quadrature_adf_distilled.py`
-- `scripts/sweep_quadrature_adf_distilled.py`
-- `experiments/nonlinear/14_quadrature_alias_power_ep_rollout_normalizer_k5.yaml`
+- [`scripts/train_quadrature_adf_distilled.py`](https://github.com/dwrtz/ml-examples/blob/master/scripts/train_quadrature_adf_distilled.py)
+- [`scripts/sweep_quadrature_adf_distilled.py`](https://github.com/dwrtz/ml-examples/blob/master/scripts/sweep_quadrature_adf_distilled.py)
+- [`experiments/nonlinear/14_quadrature_alias_power_ep_rollout_normalizer_k5.yaml`](https://github.com/dwrtz/ml-examples/blob/master/experiments/nonlinear/14_quadrature_alias_power_ep_rollout_normalizer_k5.yaml)
 
 The copied review artifacts for this post are:
 
