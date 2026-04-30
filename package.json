@@ -7,7 +7,7 @@
     "dev": "hugo server --buildDrafts --disableFastRender",
     "validate": "node scripts/validate-content.mjs --mode=dev",
     "validate:publish": "node scripts/validate-content.mjs --mode=publish",
-    "build": "hugo --gc --minify --baseURL https://mlbot.blog/",
+    "build": "rm -rf public && hugo --gc --minify --baseURL https://mlbot.blog/",
     "pagefind": "pagefind --site public",
     "preview": "npm run build && pagefind --site public --serve",
     "check-links": "node scripts/check-links.mjs public",
