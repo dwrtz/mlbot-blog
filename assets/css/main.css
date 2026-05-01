@@ -369,6 +369,19 @@ img {
   -webkit-overflow-scrolling: touch;
 }
 
+.prose .katex-display {
+  max-width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding-bottom: 0.15rem;
+  -webkit-overflow-scrolling: touch;
+}
+
+.prose .katex-display > .katex {
+  display: inline-block;
+  min-width: max-content;
+}
+
 .prose th,
 .prose td {
   min-width: 5.5rem;

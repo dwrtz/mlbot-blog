@@ -28,7 +28,10 @@ A Kalman filter is a beautiful bargain. If the dynamics and observations are
 linear and Gaussian, the filtering distribution stays Gaussian forever:
 
 \[
-q^F_t(z_t) = p(z_t \mid y_{1:t}) = \mathcal N(m_t, P_t).
+\begin{aligned}
+q^F_t(z_t) &= p(z_t \mid y_{1:t}) \\
+&= \mathcal{N}(m_t, P_t).
+\end{aligned}
 \]
 
 Each update carries only a mean and variance. The filter is online, cheap, and
@@ -90,8 +93,11 @@ The objective matters too. The IWAE objective uses multiple samples from the
 learned edge posterior and optimizes a tighter bound:
 
 \[
-\log p(y_{t-h+1:t}) \gtrsim
-\log \frac{1}{K} \sum_{k=1}^K w_k,
+\begin{aligned}
+\log p(y_{t-h+1:t})
+&\gtrsim \log \frac{1}{K}
+\sum_{k=1}^K w_k,
+\end{aligned}
 \]
 
 where the weights score sampled latent paths under the model and divide by the
@@ -129,8 +135,11 @@ q^F_t(z_t) \approx p(z_t \mid y_{1:t})
 and it should imply a good next-observation normalizer:
 
 \[
-p(y_t \mid y_{1:t-1}) =
-\int p(y_t \mid z_t)\,p(z_t \mid y_{1:t-1})\,dz_t.
+\begin{aligned}
+p(y_t \mid y_{1:t-1})
+&= \int p(y_t \mid z_t) \\
+&\quad p(z_t \mid y_{1:t-1})\,dz_t.
+\end{aligned}
 \]
 
 The Step 2 experiments added pre-update predictive scoring and late
@@ -190,18 +199,21 @@ proposal shape and posterior shape might be the remaining bottleneck.
 The flow pilot was deliberately modest. The filtering marginal was:
 
 \[
-u \sim \mathcal N(0,1),
-\qquad
-z_t = \ell_t + s_t S_t(u),
+\begin{aligned}
+u &\sim \mathcal{N}(0,1), \\
+z_t &= \ell_t + s_t S_t(u),
+\end{aligned}
 \]
 
 where \(S_t\) is a learned monotone piecewise-linear scalar spline. The model
 can evaluate exact density by change of variables:
 
 \[
+\begin{aligned}
 \log q^F_t(z_t)
-= \log \mathcal N(u;0,1)
-- \log \left|\frac{dz_t}{du}\right|.
+&= \log \mathcal{N}(u;0,1) \\
+&\quad - \log \left|\frac{dz_t}{du}\right|.
+\end{aligned}
 \]
 
 This is not a hidden smoother. The MLP still emits flow parameters online from
