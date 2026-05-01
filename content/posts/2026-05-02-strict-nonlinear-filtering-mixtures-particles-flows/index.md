@@ -267,11 +267,11 @@ write-up and a small targeted follow-up:
 
 Source artifacts:
 
-- [K2 Pareto lock report](artifacts/k2_pareto_lock_2026-05.md)
-- [Exchangeable K2/K3 report](artifacts/exchangeable_k2k3_strict_mixture_2026-05.md)
-- [Predictive-consistency report](artifacts/predictive_consistent_mixture_objectives_2026-05.md)
-- [VSMC/FIVO diagnostics report](artifacts/vsmc_fivo_diagnostics_2026-05.md)
-- [Scalar-flow pilot report](artifacts/scalar_flow_filtering_pilot_2026-05.md)
+- [K2 Pareto lock report](artifacts/k2_pareto_lock_2026-05)
+- [Exchangeable K2/K3 report](artifacts/exchangeable_k2k3_strict_mixture_2026-05)
+- [Predictive-consistency report](artifacts/predictive_consistent_mixture_objectives_2026-05)
+- [VSMC/FIVO diagnostics report](artifacts/vsmc_fivo_diagnostics_2026-05)
+- [Scalar-flow pilot report](artifacts/scalar_flow_filtering_pilot_2026-05)
 - [`sweep_nonlinear_learned.py`](https://github.com/dwrtz/ml-examples/blob/master/scripts/sweep_nonlinear_learned.py)
 - [`train_nonlinear.py`](https://github.com/dwrtz/ml-examples/blob/master/scripts/train_nonlinear.py)
 - Prior context: [When Mixtures Beat Local ELBO In Nonlinear Filtering](/posts/mixture-iwae-filtering-branch/)
