@@ -1,7 +1,7 @@
 ---
 title: "Strict Nonlinear Filtering With Mixtures, Particles, And Flows"
 description: "A research note on turning Kalman-filter intuition into reference-free nonlinear filters with mixture beliefs, FIVO diagnostics, and scalar flows."
-date: 2026-05-02T05:10:00+05:30
+date: 2026-05-02T04:30:00+05:30
 draft: false
 slug: "strict-nonlinear-filtering-mixtures-particles-flows"
 tags:
