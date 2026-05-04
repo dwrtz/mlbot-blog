@@ -38,11 +38,9 @@ robust anchor is the K2 FIVO bridge row. The next scientific step is narrower:
 calibrate the local Bayes projection and the predictive normalizer together.
 
 The source reports are in the public
-[`dwrtz/ml-examples`](https://github.com/dwrtz/ml-examples) repo, with the final
-synthesis memo at
-[`docs/results/current/strict_online_filtering_synthesis_2026-05.md`](https://github.com/dwrtz/ml-examples/blob/master/docs/results/current/strict_online_filtering_synthesis_2026-05.md).
-This post is the narrative version for readers who know Kalman filters but have
-not followed this particular branch of work.
+[`dwrtz/ml-examples`](https://github.com/dwrtz/ml-examples) repo. This post is
+the narrative version for readers who know Kalman filters but have not followed
+this particular branch of work.
 
 ## Why Strict Online Filtering Is Harder Than Sequence Inference
 
@@ -227,9 +225,8 @@ evidence now supports.
 
 ## Artifacts
 
-Primary synthesis:
+Primary research context:
 
-- [`strict_online_filtering_synthesis_2026-05.md`](https://github.com/dwrtz/ml-examples/blob/master/docs/results/current/strict_online_filtering_synthesis_2026-05.md)
 - [`docs/RESEARCH.md`](https://github.com/dwrtz/ml-examples/blob/master/docs/RESEARCH.md)
 
 Supporting reports:
