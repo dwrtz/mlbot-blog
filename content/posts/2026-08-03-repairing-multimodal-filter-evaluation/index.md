@@ -44,14 +44,15 @@ inconvenient at the same time:
 > The strongest state-density anchor remains the strongest, but none of the
 > current filters is close to nominal 90% highest-density-set coverage.
 
-The source is in
-[`dwrtz/ml-examples`](https://github.com/dwrtz/ml-examples). The durable Pack 0
-report is [part of the source commit](https://github.com/dwrtz/ml-examples/blob/3c3dbea/docs/results/current/controlled_belief_projection_pack0_audit_2026-08-03.md).
+The implementation lives in
+[`dwrtz/ml-examples`](https://github.com/dwrtz/ml-examples), alongside a
+[full evaluation report](https://github.com/dwrtz/ml-examples/blob/3c3dbea/docs/results/current/controlled_belief_projection_pack0_audit_2026-08-03.md)
+with the metric definitions, commands, and numerical checks behind this note.
 
 ## What “Gaussianized the reference” means
 
 The scalar reference filter represents a filtering belief with grid-point
-probability masses (p_g). Those masses sum to one. They are not density
+probability masses \(p_g\). Those masses sum to one. They are not density
 values. On a uniform grid with spacing \(\Delta z\), the corresponding density
 at a grid point is approximately
 
@@ -60,7 +61,7 @@ p(z_g) \approx \frac{p_g}{\Delta z}.
 \]
 
 This distinction matters immediately for state log score. If the realized
-state is (z_t^{\mathrm{true}}), we should interpolate the grid **log density**
+state is \(z_t^{\mathrm{true}}\), we should interpolate the grid **log density**
 and report
 
 \[
@@ -70,21 +71,17 @@ and report
 not the negative log of a grid-cell mass and not the log density of a Gaussian
 with the reference mean and variance.
 
-It also matters for KL. Given a continuous approximate density (q(z)), we
+It also matters for KL. Given a continuous approximate density \(q(z)\), we
 first convert it to conditional grid masses:
 
 \[
-\widetilde q_g
-=
-\frac{q(z_g)\Delta z}{\sum_j q(z_j)\Delta z}.
+\widetilde q_g = \frac{q(z_g)\Delta z}{\sum_j q(z_j)\Delta z}.
 \]
 
 Then the finite-grid forward KL is
 
 \[
-D_{\mathrm{KL}}(p\Vert q)
-\approx
-\sum_g p_g\left(\log p_g-\log\widetilde q_g\right).
+D_{\mathrm{KL}}(p\Vert q) \approx \sum_g p_g\left(\log p_g-\log\widetilde q_g\right).
 \]
 
 There is no second factor of \(\Delta z\) after both distributions have been
@@ -100,7 +97,7 @@ The repaired evaluator now reports:
 - 50%, 80%, 90%, and 95% highest-density-set coverage, length, and number of
   disconnected intervals;
 - PIT calibration and KS distance, including observation-strength regimes;
-- mass error across the periodic (2\pi) basins;
+- mass error across the periodic \(2\pi\) basins;
 - episode-level tail risk for state NLL and forward KL.
 
 The highest-density-set point is especially important. A multimodal 90% set can
@@ -110,9 +107,9 @@ Gaussian.
 
 ## The reference also had to become scalable
 
-The old random-walk predictor materialized a dense (G\times G) transition
+The old random-walk predictor materialized a dense \(G \times G\) transition
 matrix. That is a fine oracle for small tests, but its time and storage scale
-quadratically with grid size. The planned controller experiments need to reuse
+quadratically with grid size. Future controller experiments need to reuse
 the physical reference across many approximate action rollouts, so quadratic
 grid prediction would become the bottleneck before the interesting work began.
 
@@ -125,7 +122,7 @@ z_t=z_{t-1}+w_t,\qquad w_t\sim\mathcal N(0,Q),
 prediction on a uniform grid is Gaussian convolution. The production code now
 uses a truncated banded convolution for narrow kernels and a zero-padded FFT
 convolution for wide kernels. For AR(1) dynamics, it first conservatively pushes
-mass through (z\mapsto az), then applies the same Gaussian convolution. The
+mass through \(z \mapsto az\), then applies the same Gaussian convolution. The
 dense transition remains only as a small-grid correctness oracle.
 
 The cache changed with it. A reference artifact now records predictive and
@@ -140,11 +137,11 @@ same trajectory sampled under float32.
 
 The four legacy anchors used a 1,601-point grid on `[-16, 16]`. The first audit
 run failed before producing a comparison: the maximum right-edge filtering mass
-was (1.615\times10^{-4}), above the float32 limit of (10^{-4}).
+was \(1.615 \times 10^{-4}\), above the float32 limit of \(10^{-4}\).
 
 The fix was not to relax the tolerance or clip the distribution. The audit
-expanded to the planned 2,049-point `[-24, 24]` screening grid. The maximum
-filtering or predictive edge mass then fell below (5.6\times10^{-8}), with no
+expanded to a 2,049-point `[-24, 24]` screening grid. The maximum
+filtering or predictive edge mass then fell below \(5.6 \times 10^{-8}\), with no
 realized states outside the grid.
 
 This is exactly why numerical-integrity fields belong beside scientific
@@ -193,7 +190,7 @@ filter is supposed to preserve.
 ## One metric did not behave quietly
 
 The K2 FIVO bridge was rescored on the same saved physical episodes with a
-float64 reference and the stricter (10^{-6}) edge threshold. State NLL,
+float64 reference and the stricter \(10^{-6}\) edge threshold. State NLL,
 forward KL, Cramér distance, W1, HDS coverage, PIT, and exact predictive evidence
 were stable at headline precision.
 
@@ -222,7 +219,7 @@ It did win the scaling argument:
 | Method | Compile s | Operator storage | Peak device memory | Max error vs dense |
 |---|---:|---:|---:|---:|
 | Dense | 1.819 | 16.016 MiB | 78.179 MiB | — |
-| FFT | 0.337 | 652 bytes | 20.019 MiB | (6.11\times10^{-7}) |
+| FFT | 0.337 | 652 bytes | 20.019 MiB | \(6.11 \times 10^{-7}\) |
 
 The FFT representation is about 25,700 times smaller, uses roughly one quarter
 of the peak device memory, and compiles more than five times faster. More
@@ -240,7 +237,7 @@ for asking the next question:
 
 The first controller experiment should not start with reinforcement learning.
 The model is known, the action library is finite, and inference actions do not
-change the passive physical process. The next pack begins with an exact
+change the passive physical process. A useful next experiment begins with an exact
 two-hypothesis option-value model and delayed-disambiguation scalar benchmarks,
 then compares fixed, greedy, full-information rollout, and causal self-rollout
 policies.
@@ -260,8 +257,8 @@ uv run python scripts/audit_full_density_metrics.py \
   --output-dir outputs/projection_control/full_density_audit
 ```
 
-The implementation is [source commit `3c3dbea`](https://github.com/dwrtz/ml-examples/commit/3c3dbea)
-on the published Pack 0 feature branch.
+The implementation is [source commit `3c3dbea`](https://github.com/dwrtz/ml-examples/commit/3c3dbea),
+which contains the evaluation changes described here.
 The main source entry points are:
 
 - `src/vbf/control/grid_beliefs.py`
