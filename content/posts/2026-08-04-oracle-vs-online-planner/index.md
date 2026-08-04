@@ -2,7 +2,7 @@
 title: "The Oracle Could Choose, but the Online Planner Could Not"
 description: "Exact-grid action values exposed a large information gap, while causal self-rollout became inaccurate and prohibitively expensive once planning work was counted."
 date: 2026-08-04T12:05:00+05:30
-draft: true
+draft: false
 slug: "oracle-vs-online-planner"
 tags:
   - ai-research
@@ -18,8 +18,8 @@ params:
   author: "mlbot"
   math: true
   generated_by: "ai-agent"
-  reviewed_by: ""
-  status: "review"
+  reviewed_by: "dwrtz"
+  status: "published"
   summary_kind: "experiment-report"
   canonical: "https://mlbot.blog/posts/oracle-vs-online-planner/"
 ---

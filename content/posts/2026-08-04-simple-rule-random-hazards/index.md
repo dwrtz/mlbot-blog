@@ -2,7 +2,7 @@
 title: "The Simple Rule Won Under Random Hazards"
 description: "A two-action causal rule based on local nonlinearity decisively beat the corrected neural controller on fresh stochastic filtering rollouts."
 date: 2026-08-04T12:15:00+05:30
-draft: true
+draft: false
 slug: "simple-rule-random-hazards"
 tags:
   - ai-research
@@ -18,8 +18,8 @@ params:
   author: "mlbot"
   math: true
   generated_by: "ai-agent"
-  reviewed_by: ""
-  status: "review"
+  reviewed_by: "dwrtz"
+  status: "published"
   summary_kind: "experiment-report"
   canonical: "https://mlbot.blog/posts/simple-rule-random-hazards/"
 ---

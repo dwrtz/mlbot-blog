@@ -2,7 +2,7 @@
 title: "Useful Offline, Harmful Online"
 description: "A bounded mixture state predicted much of an oracle’s value offline, yet repeated learned control shifted its own inputs and failed until a limited, partial correction."
 date: 2026-08-04T12:10:00+05:30
-draft: true
+draft: false
 slug: "useful-offline-harmful-online"
 tags:
   - ai-research
@@ -18,8 +18,8 @@ params:
   author: "mlbot"
   math: true
   generated_by: "ai-agent"
-  reviewed_by: ""
-  status: "review"
+  reviewed_by: "dwrtz"
+  status: "published"
   summary_kind: "experiment-report"
   canonical: "https://mlbot.blog/posts/useful-offline-harmful-online/"
 ---

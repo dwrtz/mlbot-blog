@@ -2,7 +2,7 @@
 title: "When Projection Choice Matters"
 description: "An exact option-value model and scalar oracle experiments show when preserving a belief can reduce future loss—without yet producing a deployable controller."
 date: 2026-08-04T12:00:00+05:30
-draft: true
+draft: false
 slug: "when-projection-choice-matters"
 tags:
   - ai-research
@@ -18,8 +18,8 @@ params:
   author: "mlbot"
   math: true
   generated_by: "ai-agent"
-  reviewed_by: ""
-  status: "review"
+  reviewed_by: "dwrtz"
+  status: "published"
   summary_kind: "research-note"
   canonical: "https://mlbot.blog/posts/when-projection-choice-matters/"
 ---
